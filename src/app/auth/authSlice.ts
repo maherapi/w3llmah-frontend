@@ -27,7 +27,11 @@ export const logout = createAsyncThunk("auth/logout", http.logout);
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    resetOTPSent(state) {
+      state.OTPsent = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // send otp
@@ -78,6 +82,9 @@ export const authSlice = createSlice({
       });
   },
 });
+
+// Actions
+export const resetOTPSent = authSlice.actions.resetOTPSent;
 
 // Selectors
 export const selectAccessToken = (state: RootState) => state.auth.accessToken;

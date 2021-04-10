@@ -2,7 +2,7 @@ import { Person as PersonIcon } from "@material-ui/icons";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { login, selectOTPChecked, selectOTPChecking, selectUsername } from "../../app/auth/authSlice";
+import { login, resetOTPSent, selectOTPChecked, selectOTPChecking, selectUsername } from "../../app/auth/authSlice";
 import {
   selectUser,
 } from "../../app/registration/registrationSlice";
@@ -42,6 +42,10 @@ const Verification: React.FC<Props> = () => {
   const username = useSelector(selectUsername);
   const checking = useSelector(selectOTPChecking);
   const checked = useSelector(selectOTPChecked);
+
+  useEffect(() => {
+    dispatch(resetOTPSent());
+  }, []);
 
   useEffect(() => {
     if (checked) {
