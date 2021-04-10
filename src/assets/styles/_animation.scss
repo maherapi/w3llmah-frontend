@@ -1,0 +1,122 @@
+/* Variables */
+$delay-unit: 300ms;
+$duration-unit: 500ms;
+$default-duration: 1s;
+$default-delay: 0s;
+$default-fade-duration: 1s;
+$timing-function: ease-out;
+$translation-distance: 100px;
+
+.fadeIn {
+  animation: fadeIn $default-duration $timing-function $default-delay 1;
+}
+
+.fadeInUp {
+  animation: fadeIn $default-fade-duration $timing-function $default-delay 1,
+    up $default-duration $timing-function $default-delay 1;
+}
+
+.fadeInDown {
+  animation: fadeIn $default-fade-duration $timing-function $default-delay 1,
+    down $default-duration $timing-function $default-delay 1;
+}
+
+.fadeInRight {
+  animation: fadeIn $default-fade-duration $timing-function $default-delay 1,
+    right $default-duration $timing-function $default-delay 1;
+}
+
+.fadeInLeft {
+  animation: fadeIn $default-fade-duration $timing-function $default-delay 1,
+    left $default-duration $timing-function $default-delay 1;
+}
+
+.fadeZoomIn {
+  animation: fadeIn $default-fade-duration $timing-function $default-delay 1,
+    zoomIn $default-duration $timing-function $default-delay 1;
+}
+
+.animatedGadientBg {
+  background-image: $d-linear-gradient;
+  background-size: 400%;
+  animation: animated-gradient 10s easeIn-out 0s infinite alternate;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes up {
+  from {
+    transform: translateY(($translation-distance));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes down {
+  from {
+    transform: translateY(($translation-distance * -1));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes right {
+  from {
+    transform: translateX(($translation-distance));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes left {
+  from {
+    transform: translateX(($translation-distance * -1));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes animated-gradient {
+  0% {
+    background-position: 50%;
+  }
+  50% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
+
+@for $i from 1 through 5 {
+  .duration#{$i} {
+    animation-duration: ($duration-unit * $i);
+  }
+}
+
+@for $i from 1 through 5 {
+  .delay#{$i} {
+    animation-delay: ($delay-unit * $i);
+    animation-fill-mode: backwards;
+  }
+}

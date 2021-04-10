@@ -1,0 +1,12 @@
+@import "./assets/styles/colors";
+@import "./assets/styles/animation";
+
+body {
+  background-image: $d-linear-gradient;
+  background-size: 400%;
+  animation: animated-gradient 40s ease-in-out 0s infinite alternate;
+}
+
+a {
+  text-decoration: none;
+}

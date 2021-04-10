@@ -1,0 +1,1 @@
+export const toMB = (inBytes: number) => (inBytes / 1000000).toFixed(2);

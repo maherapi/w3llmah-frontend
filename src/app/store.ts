@@ -1,14 +1,16 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
+import feedbackSlice from "./data-source/feedback/clientFeedbackSlice";
+import authSlice from "./auth/authSlice";
+import registrationSlice from "./registration/registrationSlice";
+import feedbackMiddleware from "./middlewares/feedback.middleware";
 
 export const store = configureStore({
   reducer: {
+    feedback: feedbackSlice,
+    auth: authSlice,
+    registration: registrationSlice,
   },
+  middleware: [
+    feedbackMiddleware
+  ]
 });
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
