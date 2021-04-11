@@ -3,10 +3,11 @@ import { Close as CloseIcon } from "@material-ui/icons";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectFeedbackLoading } from "../../../app/data-source/feedback/clientFeedbackSlice";
+import { selectSingleChatUpdating } from "../../../app/messaging/messagingSlice";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: theme.zIndex.drawer + 1000,
     color: "#fff",
   },
   close: {
@@ -27,6 +28,9 @@ const GlobalLoading: React.FC<Props> = ({ text = DEFAULT_MSG }) => {
 
   const loading = useSelector(selectFeedbackLoading);
 
+  // to remove backdrop when a chat is open
+  const singleChatUpdating = useSelector(selectSingleChatUpdating);
+
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
@@ -34,7 +38,7 @@ const GlobalLoading: React.FC<Props> = ({ text = DEFAULT_MSG }) => {
   };
 
   return (
-    <Backdrop className={classes.backdrop} open={open && loading}>
+    <Backdrop className={classes.backdrop} open={open && loading && !singleChatUpdating}>
       <IconButton color="inherit" className={classes.close} onClick={handleClose}>
         <CloseIcon color="inherit" />
       </IconButton>

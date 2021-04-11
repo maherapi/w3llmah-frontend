@@ -1,9 +1,11 @@
-import React from "react";
-import { AppBar, Container, Toolbar, Button, Box, makeStyles } from "@material-ui/core";
+import React, { useState } from "react";
+import { AppBar, Container, Toolbar, Button, Box, makeStyles, IconButton, Tooltip } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo/logo-colored.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectIsLoggedIn } from "../../../app/auth/authSlice";
+import { ExitToAppRounded as ExitToAppRoundedIcon, MailOutline as MailOutlineIcon } from "@material-ui/icons";
+import MessagesScreen from "../../components/messages/MessagesScreen";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -12,7 +14,13 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
   },
+  logoLink: {
+    display: "grid",
+    placeItems: "center",
+  },
   logo: {
+    display: "grid",
+    placeItems: "center",
     "& img": {
       maxHeight: "50px",
     },
@@ -35,13 +43,15 @@ const Navbar: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   const loggedIn = useSelector(selectIsLoggedIn);
 
+  const [messagesOpen, setMessagesOpen] = useState(false);
+
   const handleLogout = async () => dispatch(logout());
 
   return (
     <AppBar position="sticky" className={classes.appbar}>
       <Toolbar>
         <Container className={classes.container}>
-          <Link to="/">
+          <Link to="/" className={classes.logoLink}>
             <Box className={classes.logo}>
               <img src={logo} alt="شعار وعلمه" />
             </Box>
@@ -60,9 +70,21 @@ const Navbar: React.FC<Props> = (props) => {
               </>
             ) : (
               <>
-                <Button color="primary" variant="outlined" onClick={handleLogout}>
-                  سجل خروج
-                </Button>
+                <Tooltip title="الرسائل">
+                  <IconButton
+                    color="primary"
+                    aria-label="قائمة الرسائل"
+                    onClick={() => setMessagesOpen((open) => !open)}
+                  >
+                    <MailOutlineIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="سجل خروج">
+                  <IconButton color="primary" aria-label="زر تسجيل الخروج" onClick={handleLogout}>
+                    <ExitToAppRoundedIcon />
+                  </IconButton>
+                </Tooltip>
+                <MessagesScreen open={messagesOpen} onClose={() => setMessagesOpen((_) => false)} />
               </>
             )}
           </Box>

@@ -3,6 +3,8 @@ import { Box, Container, makeStyles } from "@material-ui/core";
 import Navbar from "./navbar/Navbar";
 import Footer from "./footer/Footer";
 
+import ChatScreen from "../components/messages/ChatScreen";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(10),
@@ -23,6 +25,7 @@ const Layout: React.FC<Props> = ({ children }) => {
   return (
     <Box className={classes.flexColumn}>
       <Navbar />
+      <ChatScreen />
       <Container className={classes.container}>
         <>{children}</>
       </Container>
