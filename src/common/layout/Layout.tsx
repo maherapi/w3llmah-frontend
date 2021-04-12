@@ -4,6 +4,8 @@ import Navbar from "./navbar/Navbar";
 import Footer from "./footer/Footer";
 
 import ChatScreen from "../components/messages/ChatScreen";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../app/auth/authSlice";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,10 +24,13 @@ interface Props {}
 
 const Layout: React.FC<Props> = ({ children }) => {
   const classes = useStyles();
+
+  const loggedIn = useSelector(selectIsLoggedIn);
+
   return (
     <Box className={classes.flexColumn}>
       <Navbar />
-      <ChatScreen />
+      {loggedIn && <ChatScreen />}
       <Container className={classes.container}>
         <>{children}</>
       </Container>
