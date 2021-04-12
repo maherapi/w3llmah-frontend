@@ -1,4 +1,5 @@
 import routesBuilder, { IRoute } from "./common/factories/routesBuilder";
+import AppLinkPage from "./common/pages/AppLinkPage";
 import HomePage from "./common/pages/HomePage";
 import NotFoundPage from "./common/pages/NotFoundPage";
 import Verification from "./features/common/Verification";
@@ -30,6 +31,20 @@ const routes: IRoute[] = [
     component: Verification,
     auth: true,
     role: null,
+    redirectTo: "/"
+  },
+  {
+    path: "/student",
+    component: AppLinkPage,
+    auth: false,
+    role: "Student",
+    redirectTo: "/"
+  },
+  {
+    path: "/teacher",
+    component: AppLinkPage,
+    auth: false,
+    role: "Teacher",
     redirectTo: "/"
   },
   {

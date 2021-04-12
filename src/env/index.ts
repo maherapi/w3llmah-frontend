@@ -7,6 +7,7 @@ export interface IEnv {
   apiUrl: string;
   url: string;
   androidAppLink: string;
+  iOSAppLink: string;
 }
 
 export default env as IEnv;
