@@ -78,6 +78,12 @@ export const authSlice = createSlice({
         state.loggedIn = false;
         state.accessToken = null;
         state.user = null;
+        state.username = null;
+        state.role = null;
+        state.OTPsending = false;
+        state.OTPsent = false;
+        state.OTPChecking = false;
+        state.OTPChecked = false;
         localStorage.clear();
       });
   },
