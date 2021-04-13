@@ -1,10 +1,11 @@
 import { AxiosRequestConfig } from "axios";
-import { IStudentRegisterationSchema } from "../../../common/validation/student-regitration";
+import { IStudentRegisterationSchema } from "../../../common/validation/student-registration";
+import { ITeacherRegisterationSchema } from "../../../common/validation/teacher-registration";
 import { client } from "../../data-source/client";
 import { toFormData } from "../../data-source/utils/formDataUtils";
-import { toStudentRegisterDto } from "./transformation";
+import { toStudentRegisterDto, toTeacherRegisterDto } from "./transformation";
 
-export interface IRegisterResponseData {
+export interface IStudentRegisterResponseData {
   user: {
     name: string;
     date_of_birth: string;
@@ -21,6 +22,29 @@ export interface IRegisterResponseData {
   student: {
     start_type: "DOWN" | "UP";
     certification: string;
+    updated_at: string;
+    created_at: string;
+    id: number;
+  };
+}
+
+export interface ITeacherRegisterResponseData {
+  user: {
+    name: string;
+    date_of_birth: string;
+    email: string;
+    phone: string;
+    username: string;
+    profile_img: string;
+    userable_id: number;
+    userable_type: string;
+    updated_at: string;
+    created_at: string;
+    id: number;
+  };
+  teacher: {
+    certification: string;
+    eijazah: string;
     updated_at: string;
     created_at: string;
     id: number;
@@ -53,7 +77,19 @@ export const registerStudent = async (student: IStudentRegisterationSchema) => {
       "Content-Type": "multipart/form-data",
     },
   };
-  const response = await client.post<IRegisterResponseData>(`/students`, formData, config);
+  const response = await client.post<IStudentRegisterResponseData>(`/students`, formData, config);
+  return response.data;
+};
+
+export const registerTeacher = async (teacher: ITeacherRegisterationSchema) => {
+  const teacherRegisterDto = toTeacherRegisterDto(teacher);
+  const formData = toFormData(teacherRegisterDto);
+  const config: AxiosRequestConfig = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  const response = await client.post<ITeacherRegisterResponseData>(`/teachers`, formData, config);
   return response.data;
 };
 

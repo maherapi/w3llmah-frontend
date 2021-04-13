@@ -19,7 +19,7 @@ import CustomFileUpload from "../../common/components/forms/CustomFileUpload";
 import { SelectOption } from "../../common/components/forms/CustomSelect";
 import buildForm, { CustomFormBuilderContents, CustomFormBuilderField } from "../../common/factories/formBuilder";
 import { IMAGES_CONSTRAINTS } from "../../common/validation/images-constraints";
-import { IStudentRegisterationSchema, StudentRegistrationSchema } from "../../common/validation/student-regitration";
+import { IStudentRegisterationSchema, StudentRegistrationSchema } from "../../common/validation/student-registration";
 import env from "../../env";
 import { setSuccess } from "../../app/data-source/feedback/clientFeedbackSlice";
 import { store } from "../../app/store";

@@ -11,3 +11,14 @@ export interface StudentRegisterDto extends RegisterDto {
   certification_tmp?: File | null;
   last_lesson_id?: string | undefined;
 }
+
+export interface TeacherRegisterDto extends RegisterDto {
+  name?: string;
+  date_of_birth?: string;
+  email?: string;
+  phone?: string;
+  school_id?: number | "";
+  profile_img_tmp?: File | null;
+  certification_tmp?: File | null;
+  eijazah_tmp?: File | null;
+}
