@@ -6,7 +6,6 @@ import { sendOTP } from "../../app/auth/authSlice";
 import {
   getAllSchools,
   getAllSourahs,
-  registerStudent,
   registerTeacher,
   selectAllSchools,
   selectAllSourahs,
@@ -61,7 +60,8 @@ const buildRegistrationForm = () => {
       name: "birth",
       label: "تاريخ الميلاد",
       component: CustomDatePicker,
-    },{
+    },
+    {
       name: "schoolId",
       label: "المدرسة",
       component: CustomSelect,
@@ -115,15 +115,15 @@ const RegisterTeacherForm: React.FC<Props> = () => {
   const sourahs = useSelector(selectAllSourahs);
 
   useEffect(() => {
-    if(!schools.length) {
+    if (!schools.length) {
       dispatch(getAllSchools());
     }
-    if(!sourahs.length) {
+    if (!sourahs.length) {
       dispatch(getAllSourahs());
     }
   }, [schools, sourahs]);
 
-  const RegisterStudentFormTemplate = buildRegistrationForm();
+  const RegisterTeacherFormTemplate = buildRegistrationForm();
 
   useEffect(() => {
     if (submitted) {
@@ -141,7 +141,7 @@ const RegisterTeacherForm: React.FC<Props> = () => {
 
   const handleSubmit = async (values: ITeacherRegisterationSchema) => dispatch(registerTeacher(values));
 
-  return <RegisterStudentFormTemplate handleSubmit={handleSubmit} submitting={submitting} />;
+  return <RegisterTeacherFormTemplate handleSubmit={handleSubmit} submitting={submitting} />;
 };
 
 export default RegisterTeacherForm;
