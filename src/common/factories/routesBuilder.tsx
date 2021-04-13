@@ -9,28 +9,30 @@ export interface IRoute {
   component: React.FC<any>;
   componentProps?: any;
   exact?: boolean;
-  auth?: boolean;
+  needAuth?: boolean;
   role?: UserRole;
   redirectTo?: string;
 }
 
 const routesBuilder = (routes: IRoute[]): React.FC<{}> => () => {
   const userRole: UserRole = useSelector(selectUserRole);
+
   return (
     <Switch>
       {routes.map(({ exact = true, componentProps = {}, role = null, ...route }, i) => (
-        <Route path={route.path} exact={exact} key={i}>
-          {route.auth && role && (role !== userRole) ? (
-            <Redirect
-              to={{
-                pathname: route.redirectTo,
-              }}
-            />
-          ) : (
-            <route.component {...componentProps} />
-          )}
-        </Route>
-      ))}
+          <Route path={route.path} exact={exact} key={i}>
+            {route.needAuth && role !== userRole ? (
+              <Redirect
+                to={{
+                  pathname: route.redirectTo,
+                }}
+              />
+            ) : (
+              <route.component {...componentProps} />
+            )}
+          </Route>
+        )
+      )}
     </Switch>
   );
 };

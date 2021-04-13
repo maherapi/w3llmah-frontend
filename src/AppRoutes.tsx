@@ -14,7 +14,7 @@ const routes: IRoute[] = [
   {
     path: "/login",
     component: LoginForm,
-    auth: true,
+    needAuth: false,
     role: null,
     redirectTo: "/"
   },
@@ -22,30 +22,30 @@ const routes: IRoute[] = [
     path: "/register",
     component: RegistrationRoutes,
     exact: false,
-    auth: true,
+    needAuth: false,
     role: null,
     redirectTo: "/"
   },
   {
     path: "/verify",
     component: Verification,
-    auth: true,
+    needAuth: false,
     role: null,
     redirectTo: "/"
   },
   {
     path: "/student",
     component: AppLinkPage,
-    auth: false,
+    needAuth: true,
     role: "Student",
-    redirectTo: "/"
+    redirectTo: "/login"
   },
   {
     path: "/teacher",
     component: AppLinkPage,
-    auth: false,
+    needAuth: true,
     role: "Teacher",
-    redirectTo: "/"
+    redirectTo: "/login"
   },
   {
     path: "*",
