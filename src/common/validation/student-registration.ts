@@ -1,6 +1,5 @@
 import * as Yup from "yup";
-import { toMB } from "../utils/file-size";
-import { IMAGES_CONSTRAINTS, testImageSize, testImageType } from "./images-constraints";
+import { imageYupValidator } from "./images-constraints";
 
 export interface IStudentRegisterationSchema {
   name?: string;
@@ -23,14 +22,7 @@ export const StudentRegistrationSchema = Yup.object().shape({
     .matches(/^(9665){1}[0-9]{8}$/, "يرجى التأكد من رقم الجوال (رقم سعودي 9665xxxxxxxx)")
     .required(requiredMessage),
   birth: Yup.date().required(requiredMessage),
-  certification: Yup.mixed()
-    .required(requiredMessage)
-    .test("supported-type", `نوع الصورة غير مدعوم، يرجى اختيار صورة بصيغة أخرى`, testImageType)
-    .test(
-      "supported-size",
-      `يرجى تحميل ملف أصغر حجمًا (الحجم الأقصى ${toMB(IMAGES_CONSTRAINTS.SIZE)} ميجابايت`,
-      testImageSize
-    ),
+  certification: imageYupValidator.required(requiredMessage),
   startType: Yup.string().equals(["DOWN", "UP"]).required(requiredMessage),
   schoolId: Yup.number().required(requiredMessage),
   lastLessonId: Yup.string().required(requiredMessage),
