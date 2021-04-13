@@ -8,7 +8,7 @@ interface Props {
 
 const EmptyBox: React.FC<Props> = ({ scale = 50 }) => {
   return (
-    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" marginTop="50px">
+    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" marginTop="50px" marginBottom="50px">
       <InboxIcon color="secondary" style={{fontSize: scale}} />
       <Typography color="secondary">
         القائمة فارغة

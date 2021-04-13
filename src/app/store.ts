@@ -4,6 +4,7 @@ import authSlice from "./auth/authSlice";
 import registrationSlice from "./registration/registrationSlice";
 import feedbackMiddleware from "./middlewares/feedback.middleware";
 import messagingSlice from "./messaging/messagingSlice";
+import ordersSlice from "./orders/ordersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authSlice,
     registration: registrationSlice,
     messaging: messagingSlice,
+    orders: ordersSlice,
   },
   middleware: [feedbackMiddleware],
 });
