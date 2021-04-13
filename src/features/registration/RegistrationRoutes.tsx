@@ -9,22 +9,27 @@ const routes: IRoute[] = [
   {
     path: "/register",
     component: Registration,
+    needAuth: false,
   },
   {
     path: "/register/student",
     component: RegisterStudentForm,
+    needAuth: false,
   },
   {
     path: "/register/teacher",
     component: RegisterTeacherForm,
+    needAuth: false,
   },
   {
     path: "/register/manager",
     component: RegisterSchoolForm,
+    needAuth: false,
   },
   {
     path: "/register/*",
     component: NotFoundPage,
+    needAuth: false,
   },
 ];
 

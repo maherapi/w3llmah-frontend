@@ -10,29 +10,38 @@ export interface IRoute {
   componentProps?: any;
   exact?: boolean;
   needAuth?: boolean;
+  neutralAuth?: boolean;
   role?: UserRole;
   redirectTo?: string;
 }
 
 const routesBuilder = (routes: IRoute[]): React.FC<{}> => () => {
   const userRole: UserRole = useSelector(selectUserRole);
+  const loggedIn: boolean = useSelector(selectIsLoggedIn);
 
   return (
     <Switch>
-      {routes.map(({ exact = true, componentProps = {}, role = null, ...route }, i) => (
+      {routes.map(({ neutralAuth = false, exact = true, componentProps = {}, role = null, ...route }, i) => {
+        return (
           <Route path={route.path} exact={exact} key={i}>
-            {route.needAuth && role !== userRole ? (
-              <Redirect
-                to={{
-                  pathname: route.redirectTo,
-                }}
-              />
-            ) : (
+            {neutralAuth ? (
               <route.component {...componentProps} />
+            ) : (
+              <>
+                {route.needAuth === loggedIn && role === userRole ? (
+                  <route.component {...componentProps} />
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: route.redirectTo,
+                    }}
+                  />
+                )}
+              </>
             )}
           </Route>
-        )
-      )}
+        );
+      })}
     </Switch>
   );
 };

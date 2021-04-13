@@ -4,19 +4,21 @@ import HomePage from "./common/pages/HomePage";
 import NotFoundPage from "./common/pages/NotFoundPage";
 import Verification from "./features/common/Verification";
 import LoginForm from "./features/login/LoginForm";
+import AdminOrders from "./features/orders/admin/AdminOrders";
 import RegistrationRoutes from "./features/registration/RegistrationRoutes";
 
 const routes: IRoute[] = [
   {
     path: "/",
     component: HomePage,
+    neutralAuth: true,
   },
   {
     path: "/login",
     component: LoginForm,
     needAuth: false,
     role: null,
-    redirectTo: "/"
+    redirectTo: "/",
   },
   {
     path: "/register",
@@ -24,33 +26,40 @@ const routes: IRoute[] = [
     exact: false,
     needAuth: false,
     role: null,
-    redirectTo: "/"
+    redirectTo: "/",
   },
   {
     path: "/verify",
     component: Verification,
     needAuth: false,
     role: null,
-    redirectTo: "/"
+    redirectTo: "/",
   },
   {
     path: "/student",
     component: AppLinkPage,
     needAuth: true,
     role: "Student",
-    redirectTo: "/login"
+    redirectTo: "/login",
   },
   {
     path: "/teacher",
     component: AppLinkPage,
     needAuth: true,
     role: "Teacher",
-    redirectTo: "/login"
+    redirectTo: "/login",
+  },
+  {
+    path: "/admin/orders",
+    component: AdminOrders,
+    needAuth: true,
+    role: "Admin",
+    redirectTo: "/login",
   },
   {
     path: "*",
-    component: NotFoundPage
-  }
+    component: NotFoundPage,
+  },
 ];
 
 const AppRoutes = routesBuilder(routes);

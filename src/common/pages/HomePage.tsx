@@ -17,11 +17,13 @@ const HomePage: React.FC<Props> = (props) => {
         history.push("/student");
       } else if (userRole === "Teacher") {
         history.push("/teacher");
+      } else if (userRole === "Admin") {
+        history.push("/admin/orders");
       }
     }
   }, [loggedIn]);
-  
-  return <div>Home page</div>;
+
+  return <>Home</>;
 };
 
 export default HomePage;
