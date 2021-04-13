@@ -17,6 +17,7 @@ const initialState = {
 // thunk actions
 export const registerStudent = createAsyncThunk("registration/student", http.registerStudent);
 export const registerTeacher = createAsyncThunk("registration/teacher", http.registerTeacher);
+export const registerSchoolManager = createAsyncThunk("registration/schoolManager", http.registerSchoolManager);
 export const getAllSchools = createAsyncThunk("registration/allSchools", http.getAllSchools);
 export const getAllSourahs = createAsyncThunk("registration/allSourahs", http.getAllSourahs);
 
@@ -57,6 +58,22 @@ export const registrationSlice = createSlice({
         state.formSubmitting = false;
       })
 
+      // school and manager registration
+      .addCase(registerSchoolManager.pending, (state, action) => {
+        state.formSubmitting = true;
+        state.name = action.meta.arg.managerName;
+      })
+      .addCase(registerSchoolManager.fulfilled, (state, action) => {
+        state.formSubmitting = false;
+        state.formSubmitted = true;
+        state.user = action.payload.user;
+        state.user.manager = action.payload.manager;
+        state.user.school = action.payload.school;
+      })
+      .addCase(registerSchoolManager.rejected, (state, action) => {
+        state.formSubmitting = false;
+      })
+
       // schools
       .addCase(getAllSchools.fulfilled, (state, action) => {
         state.schools = action.payload
@@ -73,6 +90,8 @@ export const registrationSlice = createSlice({
 export const selectUser = (state: RootState) => state.registration.user;
 export const selectStudent = (state: RootState) => state.registration.user.student;
 export const selectTeacher = (state: RootState) => state.registration.user.teacher;
+export const selectManager = (state: RootState) => state.registration.user.manager;
+export const selectRegisterSchool = (state: RootState) => state.registration.user.school;
 export const selectSubmitted = (state: RootState) => state.registration.formSubmitted;
 export const selectSubmitting = (state: RootState) => state.registration.formSubmitting;
 export const selectVerifying = (state: RootState) => state.registration.verifying;

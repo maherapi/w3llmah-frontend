@@ -22,3 +22,19 @@ export interface TeacherRegisterDto extends RegisterDto {
   certification_tmp?: File | null;
   eijazah_tmp?: File | null;
 }
+
+export interface SchoolManagerRegisterDto extends RegisterDto {
+  // school information
+  school_name?: string;
+  longitude?: string;
+  latitude?: string;
+  address?: string;
+  gender?: string;
+
+  // manager information
+  manager_name?: string;
+  date_of_birth?: string;
+  email?: string;
+  phone?: string;
+  profile_img_tmp?: File | null;
+}

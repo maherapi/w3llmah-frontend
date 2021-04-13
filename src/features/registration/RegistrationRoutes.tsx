@@ -3,7 +3,7 @@ import NotFoundPage from "../../common/pages/NotFoundPage";
 import RegisterStudentForm from "./RegisterStudentForm";
 import RegisterTeacherForm from "./RegisterTeacherForm";
 import Registration from "./Registration";
-import Verification from "../common/Verification";
+import RegisterSchoolForm from "./RegisterSchoolForm";
 
 const routes: IRoute[] = [
   {
@@ -17,6 +17,10 @@ const routes: IRoute[] = [
   {
     path: "/register/teacher",
     component: RegisterTeacherForm,
+  },
+  {
+    path: "/register/manager",
+    component: RegisterSchoolForm,
   },
   {
     path: "/register/*",

@@ -1,6 +1,7 @@
+import { ISchoolManagerRegisterationSchema } from "../../../common/validation/school-manager-registration";
 import { IStudentRegisterationSchema } from "../../../common/validation/student-registration";
 import { ITeacherRegisterationSchema } from "../../../common/validation/teacher-registration";
-import { StudentRegisterDto, TeacherRegisterDto } from "./dtos";
+import { SchoolManagerRegisterDto, StudentRegisterDto, TeacherRegisterDto } from "./dtos";
 
 export const toStudentRegisterDto = (student: IStudentRegisterationSchema): StudentRegisterDto => ({
   name: student.name,
@@ -23,4 +24,17 @@ export const toTeacherRegisterDto = (teacher: ITeacherRegisterationSchema): Teac
   profile_img_tmp: teacher.profileImage,
   certification_tmp: teacher.certification,
   eijazah_tmp: teacher.ejazah,
+});
+
+export const toSchoolManagerRegisterDto = (schoolManager: ISchoolManagerRegisterationSchema): SchoolManagerRegisterDto => ({
+  school_name: schoolManager.schoolName,
+  longitude: schoolManager.location?.split("&")[1],
+  latitude: schoolManager.location?.split("&")[2],
+  address: schoolManager.location?.split("&")[0],
+  gender: schoolManager.schoolGender,
+  manager_name: schoolManager.managerName,
+  date_of_birth: schoolManager.birth?.toString(),
+  email: schoolManager.email,
+  phone: schoolManager.phone,
+  profile_img_tmp: schoolManager.profileImage,
 });

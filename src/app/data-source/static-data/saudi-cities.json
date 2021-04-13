@@ -1,0 +1,92 @@
+[
+    {
+        "address": "جدة",
+        "latitude": 21.543333,
+        "longitude": 39.172779
+    },
+    {
+        "address": "خميس مشيط",
+        "latitude": 18.329384,
+        "longitude": 42.759365
+    },
+    {
+        "address": "حرمة",
+        "latitude": 25.994478,
+        "longitude": 45.318161
+    },
+    {
+        "address": "عنيزة",
+        "latitude": 26.094088,
+        "longitude": 43.973454
+    },
+    {
+        "address": "الطايف",
+        "latitude": 21.437273,
+        "longitude": 40.512714
+    },
+    {
+        "address": "سكاكا",
+        "latitude": 29.953894,
+        "longitude": 40.197044
+    },
+    {
+        "address": "أرار",
+        "latitude": 30.983334,
+        "longitude": 41.016666
+    },
+    {
+        "address": "ينبع",
+        "latitude": 24.186848,
+        "longitude": 38.026428
+    },
+    {
+        "address": "حائل",
+        "latitude": 27.523647,
+        "longitude": 41.696632
+    },
+    {
+        "address": "الرياض",
+        "latitude": 24.774265,
+        "longitude": 46.738586
+    },
+    {
+        "address": "حفر الباطن",
+        "latitude": 28.446959,
+        "longitude": 45.948944
+    },
+    {
+        "address": "الدمام",
+        "latitude": 26.39925,
+        "longitude": 49.98436
+    },
+    {
+        "address": "جازان",
+        "latitude": 16.909683,
+        "longitude": 42.567902
+    },
+    {
+        "address": "المدينة المنورة",
+        "latitude": 24.470901,
+        "longitude": 39.612236
+    },
+    {
+        "address": "الدوادمي",
+        "latitude": 24.507143,
+        "longitude": 44.408798
+    },
+    {
+        "address": "مكة المكرمة",
+        "latitude": 21.42251,
+        "longitude": 39.826168
+    },
+    {
+        "address": "القطيف",
+        "latitude": 26.565191,
+        "longitude": 49.996376
+    },
+    {
+        "address": "الظهران",
+        "latitude": 26.236355,
+        "longitude": 50.0326
+    }
+]

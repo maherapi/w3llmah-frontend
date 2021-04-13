@@ -1,24 +1,26 @@
 import { AxiosRequestConfig } from "axios";
+import { ISchoolManagerRegisterationSchema } from "../../../common/validation/school-manager-registration";
 import { IStudentRegisterationSchema } from "../../../common/validation/student-registration";
 import { ITeacherRegisterationSchema } from "../../../common/validation/teacher-registration";
 import { client } from "../../data-source/client";
 import { toFormData } from "../../data-source/utils/formDataUtils";
-import { toStudentRegisterDto, toTeacherRegisterDto } from "./transformation";
+import { toSchoolManagerRegisterDto, toStudentRegisterDto, toTeacherRegisterDto } from "./transformation";
 
+export interface IUserRegisterResponseData {
+  name: string;
+  date_of_birth: string;
+  email: string;
+  phone: string;
+  username: string;
+  profile_img: string;
+  userable_id: number;
+  userable_type: string;
+  updated_at: string;
+  created_at: string;
+  id: number;
+}
 export interface IStudentRegisterResponseData {
-  user: {
-    name: string;
-    date_of_birth: string;
-    email: string;
-    phone: string;
-    username: string;
-    profile_img: string;
-    userable_id: number;
-    userable_type: string;
-    updated_at: string;
-    created_at: string;
-    id: number;
-  };
+  user: IUserRegisterResponseData;
   student: {
     start_type: "DOWN" | "UP";
     certification: string;
@@ -29,25 +31,33 @@ export interface IStudentRegisterResponseData {
 }
 
 export interface ITeacherRegisterResponseData {
-  user: {
-    name: string;
-    date_of_birth: string;
-    email: string;
-    phone: string;
-    username: string;
-    profile_img: string;
-    userable_id: number;
-    userable_type: string;
-    updated_at: string;
-    created_at: string;
-    id: number;
-  };
+  user: IUserRegisterResponseData;
   teacher: {
     certification: string;
     eijazah: string;
     updated_at: string;
     created_at: string;
     id: number;
+  };
+}
+
+export interface ISchoolManagerRegisterResponseData {
+  user: IUserRegisterResponseData;
+  manager: {
+    updated_at: string;
+    created_at: string;
+    id: number;
+  };
+  school: {
+    address: string;
+    latitude: string;
+    longitude: string;
+    gender: string;
+    name: string;
+    updated_at: string;
+    created_at: string;
+    id: number;
+    manager_id: number;
   };
 }
 
@@ -90,6 +100,18 @@ export const registerTeacher = async (teacher: ITeacherRegisterationSchema) => {
     },
   };
   const response = await client.post<ITeacherRegisterResponseData>(`/teachers`, formData, config);
+  return response.data;
+};
+
+export const registerSchoolManager = async (schoolManager: ISchoolManagerRegisterationSchema) => {
+  const schoolManagerRegisterDto = toSchoolManagerRegisterDto(schoolManager);
+  const formData = toFormData(schoolManagerRegisterDto);
+  const config: AxiosRequestConfig = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  const response = await client.post<ISchoolManagerRegisterResponseData>(`/managers`, formData, config);
   return response.data;
 };
 

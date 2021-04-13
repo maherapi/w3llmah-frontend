@@ -1,0 +1,20 @@
+[
+  { "address": "Jeddah, Tihamah, Saudi Arabia", "latitude": 21.543333, "longitude": 39.172779 },
+  { "address": "Khamis Mushait, Asir, Saudi Arabia", "latitude": 18.329384, "longitude": 42.759365 },
+  { "address": "Harmah, Central Region, Saudi Arabia", "latitude": 25.994478, "longitude": 45.318161 },
+  { "address": "Unayzah, Al Qassim, Saudi Arabia", "latitude": 26.094088, "longitude": 43.973454 },
+  { "address": "Taif, Mecca, Saudi Arabia", "latitude": 21.437273, "longitude": 40.512714 },
+  { "address": "Sakaka, Al Jawf, Saudi Arabia", "latitude": 29.953894, "longitude": 40.197044 },
+  { "address": "Arar, Saudi Arabia", "latitude": 30.983334, "longitude": 41.016666 },
+  { "address": "Yanbu, Saudi Arabia", "latitude": 24.186848, "longitude": 38.026428 },
+  { "address": "Hail, Saudi Arabia", "latitude": 27.523647, "longitude": 41.696632 },
+  { "address": "Riyadh, Saudi Arabia", "latitude": 24.774265, "longitude": 46.738586 },
+  { "address": "Hafar Al Batin, Saudi Arabia", "latitude": 28.446959, "longitude": 45.948944 },
+  { "address": "Dammam, Saudi Arabia", "latitude": 26.39925, "longitude": 49.98436 },
+  { "address": "Jazan, Saudi Arabia", "latitude": 16.909683, "longitude": 42.567902 },
+  { "address": "Medina, Saudi Arabia", "latitude": 24.470901, "longitude": 39.612236 },
+  { "address": "Al Duwadimi, Saudi Arabia", "latitude": 24.507143, "longitude": 44.408798 },
+  { "address": "Mecca, Hejazi, Saudi Arabia", "latitude": 21.42251, "longitude": 39.826168 },
+  { "address": "Al Qatif, Saudi Arabia", "latitude": 26.565191, "longitude": 49.996376 },
+  { "address": "Dhahran, Saudi Arabia", "latitude": 26.236355, "longitude": 50.0326 }
+]
