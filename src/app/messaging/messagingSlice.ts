@@ -17,7 +17,7 @@ export const getAllChats = createAsyncThunk("messaging/chats", http.getAllChats)
 export const getSingleChat = createAsyncThunk("messaging/singleChat", http.getChat);
 export const sendMessage = createAsyncThunk("messaging/sendMessage", http.sendMessage);
 
-export const messaginSlice = createSlice({
+export const messagingSlice = createSlice({
   name: "messaging",
   initialState,
   reducers: {
@@ -65,8 +65,8 @@ export const messaginSlice = createSlice({
 });
 
 // actions
-export const clearSingleChat = messaginSlice.actions.clearSingleChat;
-export const setUpdatingSingleChat = messaginSlice.actions.setUpdatingSingleChat;
+export const clearSingleChat = messagingSlice.actions.clearSingleChat;
+export const setUpdatingSingleChat = messagingSlice.actions.setUpdatingSingleChat;
 
 // chats selector
 export const selectAllChats = (state: RootState) => state.messaging.chats;
@@ -75,4 +75,4 @@ export const selectSingleChat = (state: RootState) => state.messaging.singleChat
 export const selectSingleChatLoading = (state: RootState) => state.messaging.singleChatLoading;
 export const selectSingleChatUpdating = (state: RootState) => state.messaging.singleChatUpdating;
 
-export default messaginSlice.reducer;
+export default messagingSlice.reducer;
