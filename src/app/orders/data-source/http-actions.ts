@@ -54,3 +54,11 @@ export const getAllOrders = async (userId: number) => {
   const response = await client.get<{ orders: IOrdersItemResponse[] }>(`/orders/${userId}`);
   return response.data.orders;
 };
+
+export const approveSchool = async ({ orderId, state }: { orderId: number; state: OrderState }) => {
+  const response = await client.post<any>(`/orders/${orderId}`, {
+    response: "تمت معالجة الطلب",
+    state,
+  });
+  return response.data;
+};

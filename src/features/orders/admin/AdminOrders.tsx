@@ -2,9 +2,10 @@ import { Card, Container, makeStyles, Paper, Tab, Typography } from "@material-u
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { selectLoggedInUser } from "../../../app/auth/authSlice";
 import { IOrdersItemResponse } from "../../../app/orders/data-source/http-actions";
-import { getAllOrders, selectAllOrders } from "../../../app/orders/ordersSlice";
+import { getAllOrders, selectAllOrders, setSingleOrder } from "../../../app/orders/ordersSlice";
 import OrdersTable from "./tables/OrdersTable";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +35,7 @@ interface Props {}
 export const AdminOrders: React.FC<Props> = (props) => {
   const classes = useStyles();
 
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const userId = useSelector(selectLoggedInUser)?.id;
@@ -46,7 +48,8 @@ export const AdminOrders: React.FC<Props> = (props) => {
   }, []);
 
   const handleOrderDetailsClick = (order: IOrdersItemResponse) => {
-    console.log(order);
+    dispatch(setSingleOrder(order));
+    history.push("/admin/order");
   };
 
   return (
