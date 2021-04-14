@@ -160,18 +160,20 @@ const AdminSingleOrder: React.FC<Props> = (props) => {
                     رفض
                   </Button>
                 </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    className={`${classes.submit}`}
-                    disabled={approveSchoolLoading}
-                    onClick={() => handleAction("IN_PROGRESS")}
-                  >
-                    وضع تحت المراجعة
-                  </Button>
-                </Grid>
+                {singleOrder?.state !== "IN_PROGRESS" && (
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      className={`${classes.submit}`}
+                      disabled={approveSchoolLoading}
+                      onClick={() => handleAction("IN_PROGRESS")}
+                    >
+                      وضع تحت المراجعة
+                    </Button>
+                  </Grid>
+                )}
               </>
             ) : (
               <></>

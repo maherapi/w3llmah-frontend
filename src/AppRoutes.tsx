@@ -4,8 +4,8 @@ import HomePage from "./common/pages/HomePage";
 import NotFoundPage from "./common/pages/NotFoundPage";
 import Verification from "./features/common/Verification";
 import LoginForm from "./features/login/LoginForm";
-import AdminOrders from "./features/orders/admin/AdminOrders";
-import AdminSingleOrder from "./features/orders/admin/AdminSingleOrder";
+import AdminOrders from "./features/admin/orders/AdminOrders";
+import AdminSingleOrder from "./features/admin/orders/AdminSingleOrder";
 import RegistrationRoutes from "./features/registration/RegistrationRoutes";
 
 const routes: IRoute[] = [
