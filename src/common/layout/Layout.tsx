@@ -19,7 +19,7 @@ const adminSideNaveLinks: ISideNavLink[] = [
   },
   {
     text: "المدارس",
-    link: "/admin/orders",
+    link: "/admin/schools",
     Icon: SchoolIcon,
   },
 ];

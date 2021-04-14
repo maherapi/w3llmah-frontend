@@ -7,6 +7,8 @@ import LoginForm from "./features/login/LoginForm";
 import AdminOrders from "./features/admin/orders/AdminOrders";
 import AdminSingleOrder from "./features/admin/orders/AdminSingleOrder";
 import RegistrationRoutes from "./features/registration/RegistrationRoutes";
+import AdminSchools from "./features/admin/schools/AdminSchools";
+import AdminSingleSchool from "./features/admin/schools/AdminSingleSchool";
 
 const routes: IRoute[] = [
   {
@@ -60,6 +62,20 @@ const routes: IRoute[] = [
   {
     path: "/admin/order",
     component: AdminSingleOrder,
+    needAuth: true,
+    role: "Admin",
+    redirectTo: "/login",
+  },
+  {
+    path: "/admin/schools",
+    component: AdminSchools,
+    needAuth: true,
+    role: "Admin",
+    redirectTo: "/login",
+  },
+  {
+    path: "/admin/school",
+    component: AdminSingleSchool,
     needAuth: true,
     role: "Admin",
     redirectTo: "/login",

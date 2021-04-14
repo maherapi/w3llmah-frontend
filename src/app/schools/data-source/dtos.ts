@@ -1,0 +1,1 @@
+export type SchoolStatus = "ACTIVE" | "NONACTIVE" | "DELETED" | null;
