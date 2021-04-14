@@ -7,6 +7,8 @@ import { logout, selectIsLoggedIn } from "../../../app/auth/authSlice";
 import { ExitToAppRounded as ExitToAppRoundedIcon, MailOutline as MailOutlineIcon } from "@material-ui/icons";
 import MessagesScreen from "../../components/messages/MessagesScreen";
 
+import MenuIcon from "@material-ui/icons/Menu";
+
 const useStyles = makeStyles((theme) => ({
   appbar: {
     backgroundColor: theme.palette.grey[300],
@@ -35,9 +37,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props {}
+interface Props {
+  onToggleSideBar: () => void;
+}
 
-const Navbar: React.FC<Props> = (props) => {
+const Navbar: React.FC<Props> = ({ onToggleSideBar }) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -51,6 +55,11 @@ const Navbar: React.FC<Props> = (props) => {
     <AppBar position="sticky" className={classes.appbar}>
       <Toolbar>
         <Container className={classes.container}>
+          {loggedIn && (
+            <IconButton color="primary" aria-label="المتنقل الجانبي" onClick={onToggleSideBar}>
+              <MenuIcon />
+            </IconButton>
+          )}
           <Link to="/" className={classes.logoLink}>
             <Box className={classes.logo}>
               <img src={logo} alt="شعار وعلمه" />
