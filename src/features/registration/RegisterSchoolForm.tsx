@@ -6,6 +6,7 @@ import { selectOTPSent, sendOTP } from "../../app/auth/authSlice";
 import { setSuccess } from "../../app/data-source/feedback/clientFeedbackSlice";
 import citiesLocations from "../../app/data-source/static-data/saudi-cities.json";
 import {
+  clearRegistrationState,
   registerSchoolManager,
   selectSubmitted,
   selectSubmitting,
@@ -119,7 +120,9 @@ const RegisterSchoolForm: React.FC<Props> = () => {
   useEffect(() => {
     if (submitted) {
       dispatch(setSuccess(`اسم المستخدم الخاص بك: ${user.username}`));
-      dispatch(sendOTP({ username: user.username }));
+      const username = user.username;
+      dispatch(clearRegistrationState());
+      dispatch(sendOTP({ username: username }));
     }
   }, [submitted]);
 

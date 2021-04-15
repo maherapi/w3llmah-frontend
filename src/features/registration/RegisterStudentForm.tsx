@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { sendOTP } from "../../app/auth/authSlice";
 import {
+  clearRegistrationState,
   getAllSchools,
   getAllSourahs,
   registerStudent,
@@ -136,7 +137,9 @@ const RegisterStudentForm: React.FC<Props> = () => {
   useEffect(() => {
     if (submitted) {
       dispatch(setSuccess(`اسم المستخدم الخاص بك: ${user.username}`));
-      dispatch(sendOTP({ username: user.username }));
+      const username = user.username;
+      dispatch(clearRegistrationState());
+      dispatch(sendOTP({ username: username }));
     }
   }, [submitted]);
 

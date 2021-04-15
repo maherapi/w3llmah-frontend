@@ -24,7 +24,18 @@ export const getAllSourahs = createAsyncThunk("registration/allSourahs", http.ge
 export const registrationSlice = createSlice({
   name: "registration",
   initialState,
-  reducers: {},
+  reducers: {
+    clearState(state) {
+      state.user = initialState.user;
+      state.name = initialState.name;
+      state.formSubmitting = initialState.formSubmitting;
+      state.formSubmitted = initialState.formSubmitted;
+      state.verifying = initialState.verifying;
+      state.verified = initialState.verified;
+      state.schools = initialState.schools;
+      state.sourahs = initialState.sourahs;
+    },
+  },
   extraReducers: (builder) => {
     builder
 
@@ -76,15 +87,18 @@ export const registrationSlice = createSlice({
 
       // schools
       .addCase(getAllSchools.fulfilled, (state, action) => {
-        state.schools = action.payload
+        state.schools = action.payload;
       })
 
       // sourahs
       .addCase(getAllSourahs.fulfilled, (state, action) => {
-        state.sourahs = action.payload
-      })
+        state.sourahs = action.payload;
+      });
   },
 });
+
+// actions
+export const clearRegistrationState = registrationSlice.actions.clearState;
 
 // Selectors
 export const selectUser = (state: RootState) => state.registration.user;
