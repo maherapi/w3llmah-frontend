@@ -68,7 +68,9 @@ const TeachersTable: React.FC<Props> = ({ areaLabel, teachers, onTeacherDetailsC
                   <StyledTableCell scope="row">{teacher.id}</StyledTableCell>
                   <StyledTableCell>{teacher.user.name}</StyledTableCell>
                   <StyledTableCell>{teacher.user.email}</StyledTableCell>
-                  <StyledTableCell>{teacher.rings[teacher.rings.length - 1].name}</StyledTableCell>
+                  <StyledTableCell>
+                    {teacher.rings && teacher.rings.length !== 0 ? teacher.rings.map((t) => t.name).join(", ") : ""}
+                  </StyledTableCell>
                   <StyledTableCell>
                     <IconButton
                       color="primary"

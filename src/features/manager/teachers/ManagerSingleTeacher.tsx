@@ -148,7 +148,9 @@ const ManagerSingleTeacher: React.FC<Props> = (props) => {
                 </Button>
               </Typography>
               <Typography component="p" variant="body1" align="left">
-                {singleTeacher?.rings[singleTeacher?.rings.length - 1].name}
+                {singleTeacher?.rings && singleTeacher?.rings.length !== 0
+                  ? singleTeacher?.rings.map((t) => t.name).join(", ")
+                  : ""}
               </Typography>
               <EditRingDialog
                 open={editRingOpen}
