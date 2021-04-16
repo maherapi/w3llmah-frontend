@@ -34,7 +34,7 @@ export interface IUserOrdersResponse {
   status: string;
   created_at: string;
   updated_at: string;
-  userable: IManagerOrdersResponse;
+  userable: any;
 }
 
 export interface IOrdersItemResponse {
@@ -59,6 +59,24 @@ export const approveSchool = async ({ orderId, state }: { orderId: number; state
   const response = await client.post<any>(`/orders/${orderId}`, {
     response: "تمت معالجة الطلب",
     state,
+    status: state === "ACCEPTED" ? "ACTIVE" : "NONACTIVE"
+  });
+  return response.data;
+};
+
+export const approveTeacher = async ({ ringId, teacherId, state }: { ringId: number; teacherId: number, state: OrderState }) => {
+  const response = await client.post<any>(`/managers/${teacherId}/teachers`, {
+    ring_id: ringId,
+    state
+  });
+  return response.data;
+};
+
+export const approveStudent = async ({ ringId, studentId, state }: { ringId: number; studentId: number, state: OrderState }) => {
+  const response = await client.post<any>(`/managers/${studentId}/students`, {
+    ring_id: ringId,
+    state,
+    status: state === "ACCEPTED" ? "ACTIVE" : "NONACTIVE"
   });
   return response.data;
 };

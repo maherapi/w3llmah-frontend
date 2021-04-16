@@ -1,9 +1,11 @@
-import { Avatar, Button, Card, Container, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Avatar, Button, Card, Container, Grid, IconButton, makeStyles, Typography } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { setSuccess } from "../../../app/data-source/feedback/clientFeedbackSlice";
+import { selectSingleRing, selectUpdateByManagerFinished, selectUpdateByManagerLoading, setUpdateByManagerFinished, updateRingByManager } from "../../../app/rings/ringsSlice";
+import EyeIcon from "@material-ui/icons/Visibility";
 import { SchoolStatus } from "../../../app/schools/data-source/dtos";
 import {
   selectActivationSchoolFinished,
@@ -13,6 +15,7 @@ import {
   updateActivationSchool,
 } from "../../../app/schools/schoolsSlice";
 import env from "../../../env";
+import { RingStatus } from "../../../app/rings/data-source/dtos";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -50,101 +53,83 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {}
 
-const AdminSingleSchool: React.FC<Props> = (props) => {
+const ManagerSingleRing: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const singleSchool = useSelector(selectSingleSchoolAdmin);
-  const activationSchoolLoading = useSelector(selectActivationSchoolLoading);
-  const activationSchoolFinished = useSelector(selectActivationSchoolFinished);
+  const singleRing = useSelector(selectSingleRing);
+  const updateByManagerLoading = useSelector(selectUpdateByManagerLoading);
+  const updateByManagerFinished = useSelector(selectUpdateByManagerFinished);
 
   useEffect(() => {
-    if (!singleSchool) {
-      history.push("/admin/schools");
+    if (!singleRing) {
+      history.push("/manager/rings");
     }
-  }, [singleSchool]);
+  }, [singleRing]);
 
   useEffect(() => {
-    if (activationSchoolFinished) {
-      dispatch(setSuccess("تم تحديث حالة المدرسة"));
-      history.push("/admin/schools");
+    if (updateByManagerFinished) {
+      dispatch(setSuccess("تم تحديث حالة الحلقة"));
+      history.push("/manager/rings");
     }
-  }, [activationSchoolFinished]);
+  }, [updateByManagerFinished]);
 
   useEffect(() => {
     return () => {
-      dispatch(setActivationSchoolFinished(false));
+      dispatch(setUpdateByManagerFinished(false));
     };
   }, []);
 
-  const handleAction = (value: SchoolStatus) => {
-    dispatch(updateActivationSchool({ managerId: singleSchool?.manager_id || 0, status: value }));
+  const handleAction = (value: RingStatus) => {
+    dispatch(updateRingByManager({ ringId: singleRing?.id || 0, status: value }));
   };
+
+  const handleTeacherDetailsClick = (teacher: any) => {};
 
   return (
     <Container maxWidth="sm" className={`${classes.container} fadeInUp`}>
       <Card className={classes.card}>
         <Container component="main" maxWidth="xs" className={classes.innerContainer}>
           <Typography component="h1" variant="h5" align="center">
-            معلومات المدرسة
+            معلومات الحلقة
           </Typography>
-          <Avatar
-            className={classes.avatar}
-            src={`${env.url}/images/profile_img/${singleSchool?.manager.user.profile_img}`}
-            alt={singleSchool?.manager.user.name}
-          />
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography component="label" variant="caption" align="left">
-                اسم المدرسة
+                اسم الحلقة
               </Typography>
               <Typography component="p" variant="body1" align="left">
-                {singleSchool?.name}
+                {singleRing?.name}
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography component="label" variant="caption" align="left">
-                موقع المدرسة
+                اسم الأستاذ
               </Typography>
               <Typography component="p" variant="body1" align="left">
-                {singleSchool?.address}
+                <Button onClick={handleTeacherDetailsClick} startIcon={<EyeIcon />}>
+                  {singleRing?.teacherName}
+                </Button>
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography component="label" variant="caption" align="left">
-                اسم مدير المدرسة
+                فترة الحلقة
               </Typography>
               <Typography component="p" variant="body1" align="left">
-                {singleSchool?.manager.user.name}
+                {singleRing?.period === "MORNING" ? "صباحية" : "مسائية"}
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography component="label" variant="caption" align="left">
-                اسم المستخدم للمدير
+                عدد الطلاب الأقصى
               </Typography>
               <Typography component="p" variant="body1" align="left">
-                {singleSchool?.manager.user.username}
+                {singleRing?.max_student}
               </Typography>
             </Grid>
-            <Grid item xs={12}>
-              <Typography component="label" variant="caption" align="left">
-                بريد المدير
-              </Typography>
-              <Typography component="p" variant="body1" align="left">
-                {singleSchool?.manager.user.email}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="label" variant="caption" align="left">
-                رقم هاتف المدير
-              </Typography>
-              <Typography component="p" variant="body1" align="left">
-                {singleSchool?.manager.user.phone}
-              </Typography>
-            </Grid>
-
-            {singleSchool?.status === "NONACTIVE" ? (
+            {singleRing?.status === "NONACTIVE" ? (
               <Grid item xs={12}>
                 <Button
                   type="submit"
@@ -152,7 +137,7 @@ const AdminSingleSchool: React.FC<Props> = (props) => {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
-                  disabled={activationSchoolLoading}
+                  disabled={updateByManagerLoading}
                   onClick={() => handleAction("ACTIVE")}
                 >
                   تنشيط
@@ -160,7 +145,7 @@ const AdminSingleSchool: React.FC<Props> = (props) => {
               </Grid>
             ) : (
               <>
-                {singleSchool?.status === "ACTIVE" ? (
+                {singleRing?.status === "ACTIVE" ? (
                   <Grid item xs={12}>
                     <Button
                       type="submit"
@@ -168,7 +153,7 @@ const AdminSingleSchool: React.FC<Props> = (props) => {
                       variant="contained"
                       color="primary"
                       className={`${classes.submit} ${classes.refuse}`}
-                      disabled={activationSchoolLoading}
+                      disabled={updateByManagerLoading}
                       onClick={() => handleAction("NONACTIVE")}
                     >
                       إلغاء تنشيط
@@ -179,8 +164,9 @@ const AdminSingleSchool: React.FC<Props> = (props) => {
                 )}
               </>
             )}
+
             <Grid item xs={12} className={classes.backLinkContainer}>
-              <Link to="/admin/schools">العودة لقائمة المدارس</Link>
+              <Link to="/manager/rings">العودة لقائمة الحلقات</Link>
             </Grid>
           </Grid>
         </Container>
@@ -189,4 +175,4 @@ const AdminSingleSchool: React.FC<Props> = (props) => {
   );
 };
 
-export default AdminSingleSchool;
+export default ManagerSingleRing;

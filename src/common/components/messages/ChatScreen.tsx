@@ -14,6 +14,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../../app/auth/authSlice";
 import { getSingleChat } from "../../../app/messaging/messagingSlice";
+import env from "../../../env";
 
 const UPDATE_FREQ = 30;
 
@@ -96,7 +97,10 @@ const ChatScreen: React.FC<Props> = (props) => {
       open={(singleChat !== null && !singleChatLoading) || singleChatUpdating}
       onClose={() => dispatch(clearSingleChat())}
       title={`${singleChat?.receiver.name}`}
-      avatar={{ src: singleChat?.receiver.profile_img, alt: singleChat?.receiver.name }}
+      avatar={{
+        src: `${env.url}/images/profile_img/${singleChat?.receiver.profile_img}`,
+        alt: singleChat?.receiver.name,
+      }}
     >
       <Box className={classes.messagesBody}>
         <Box className={classes.messagesContainer}>

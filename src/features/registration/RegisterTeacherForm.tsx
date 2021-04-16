@@ -122,7 +122,7 @@ const RegisterTeacherForm: React.FC<Props> = () => {
     if (!sourahs.length) {
       dispatch(getAllSourahs());
     }
-  }, [schools, sourahs]);
+  }, []);
 
   const RegisterTeacherFormTemplate = buildRegistrationForm();
 

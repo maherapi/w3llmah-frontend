@@ -73,7 +73,7 @@ const SideBar: React.FC<Props> = ({ sideNaveLinks, open, setOpenSideBar }) => {
       <Divider />
       <List onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
         {sideNaveLinks.map((link) => (
-          <Box onClick={() => history.push(link.link)}>
+          <Box onClick={() => history.push(link.link)} key={link.link}>
             <ListItem button key={link.text}>
               <ListItemIcon>{<link.Icon />}</ListItemIcon>
               <ListItemText primary={link.text} />

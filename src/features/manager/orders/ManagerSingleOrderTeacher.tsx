@@ -1,17 +1,22 @@
 import { Avatar, Button, Card, Container, Grid, makeStyles, Typography } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import EyeIcon from "@material-ui/icons/Visibility";
+import { selectLoggedInUser, selectUserRole } from "../../../app/auth/authSlice";
 import { setSuccess } from "../../../app/data-source/feedback/clientFeedbackSlice";
 import { OrderState } from "../../../app/orders/data-source/dtos";
 import {
-  approveSchool,
-  selectApproveSchoolFinished,
-  selectApproveSchoolLoading,
+  approveTeacher,
+  selectApproveTeacherFinished,
+  selectApproveTeacherLoading,
   selectSingleOrder,
-  setApproveSchoolFinished,
+  setApproveTeacherFinished,
 } from "../../../app/orders/ordersSlice";
+import { getAllRings, selectAllRings } from "../../../app/rings/ringsSlice";
+import CustomSelectWithoutForm from "../../../common/components/common/CustomSelectWithouForm";
+import ImageDialog from "../../../common/components/common/ImageDialog";
 import env from "../../../env";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,36 +55,46 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {}
 
-const AdminSingleOrder: React.FC<Props> = (props) => {
+const ManagerSingleOrderTeacher: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   const history = useHistory();
   const dispatch = useDispatch();
+  const loggedInUserRole = useSelector(selectUserRole);
+  const loggedInUser = useSelector(selectLoggedInUser);
   const singleOrder = useSelector(selectSingleOrder);
-  const approveSchoolLoading = useSelector(selectApproveSchoolLoading);
-  const approveSchoolFinished = useSelector(selectApproveSchoolFinished);
+  const approveTeacherLoading = useSelector(selectApproveTeacherLoading);
+  const approveTeacherFinished = useSelector(selectApproveTeacherFinished);
+  const rings = useSelector(selectAllRings);
+
+  const [selectedRing, setSelectedRing] = useState("");
+  const [certificationDialogOpen, setCertificationDialogOpen] = useState(false);
+  const [eijazaDialogOpen, setEijazaDialogOpen] = useState(false);
 
   useEffect(() => {
     if (!singleOrder) {
-      history.push("/admin/orders");
+      history.push(`/${(loggedInUserRole + "").toLowerCase()}/orders`);
     }
   }, [singleOrder]);
 
   useEffect(() => {
-    if (approveSchoolFinished) {
+    if (approveTeacherFinished) {
       dispatch(setSuccess("تمت معالجة الطلب"));
-      history.push("/admin/orders");
+      history.push(`/${(loggedInUserRole + "").toLowerCase()}/orders`);
     }
-  }, [approveSchoolFinished]);
+  }, [approveTeacherFinished]);
 
   useEffect(() => {
+    dispatch(getAllRings(loggedInUser.id));
     return () => {
-      dispatch(setApproveSchoolFinished(false));
+      dispatch(setApproveTeacherFinished(false));
     };
   }, []);
 
   const handleAction = (value: OrderState) => {
-    dispatch(approveSchool({ orderId: singleOrder?.id || 0, state: value }));
+    dispatch(
+      approveTeacher({ ringId: +selectedRing, teacherId: singleOrder?.request_by_user.userable.id, state: value })
+    );
   };
 
   return (
@@ -87,7 +102,7 @@ const AdminSingleOrder: React.FC<Props> = (props) => {
       <Card className={classes.card}>
         <Container component="main" maxWidth="xs" className={classes.innerContainer}>
           <Typography component="h1" variant="h5" align="center">
-            طلب تسجيل مدرسة
+            طلب تسجيل أستاذ
           </Typography>
           <Avatar
             className={classes.avatar}
@@ -97,23 +112,7 @@ const AdminSingleOrder: React.FC<Props> = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography component="label" variant="caption" align="left">
-                اسم المدرسة
-              </Typography>
-              <Typography component="p" variant="body1" align="left">
-                {singleOrder?.request_by_user.userable.school.name}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="label" variant="caption" align="left">
-                موقع المدرسة
-              </Typography>
-              <Typography component="p" variant="body1" align="left">
-                {singleOrder?.request_by_user.userable.school.address}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="label" variant="caption" align="left">
-                اسم مدير المدرسة
+                اسم الأستاذ
               </Typography>
               <Typography component="p" variant="body1" align="left">
                 {singleOrder?.request_by_user.name}
@@ -121,7 +120,7 @@ const AdminSingleOrder: React.FC<Props> = (props) => {
             </Grid>
             <Grid item xs={12}>
               <Typography component="label" variant="caption" align="left">
-                بريد المدير
+                بريد الأستاذ
               </Typography>
               <Typography component="p" variant="body1" align="left">
                 {singleOrder?.request_by_user.email}
@@ -129,11 +128,42 @@ const AdminSingleOrder: React.FC<Props> = (props) => {
             </Grid>
             <Grid item xs={12}>
               <Typography component="label" variant="caption" align="left">
-                رقم هاتف المدير
+                رقم هاتف الأستاذ
               </Typography>
               <Typography component="p" variant="body1" align="left">
                 {singleOrder?.request_by_user.phone}
               </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Button onClick={() => setCertificationDialogOpen(true)} startIcon={<EyeIcon />}>
+                الشهادة
+              </Button>
+              <ImageDialog
+                open={certificationDialogOpen}
+                handleClose={() => setCertificationDialogOpen(false)}
+                title={`شهادة الأستاذ ${singleOrder?.request_by_user.name}`}
+                imgSrc={`${env.url}/images/certification/${singleOrder?.request_by_user.userable.certification}`}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button onClick={() => setEijazaDialogOpen(true)} startIcon={<EyeIcon />}>
+                الإجازة
+              </Button>
+              <ImageDialog
+                open={eijazaDialogOpen}
+                handleClose={() => setEijazaDialogOpen(false)}
+                title={`إجازة الأستاذ ${singleOrder?.request_by_user.name}`}
+                imgSrc={`${env.url}/images/eijazah/${singleOrder?.request_by_user.userable.eijazah}`}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              {rings && (singleOrder?.state === "NEW" || singleOrder?.state === "IN_PROGRESS") && (
+                <CustomSelectWithoutForm
+                  label="اختر حلقة"
+                  options={rings.map((ring) => ({ text: ring.name, value: `${ring.id}` }))}
+                  onChange={(v) => setSelectedRing(v.target.value + "")}
+                />
+              )}
             </Grid>
 
             {singleOrder?.state === "NEW" || singleOrder?.state === "IN_PROGRESS" ? (
@@ -145,7 +175,7 @@ const AdminSingleOrder: React.FC<Props> = (props) => {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    disabled={approveSchoolLoading}
+                    disabled={approveTeacherLoading || !selectedRing}
                     onClick={() => handleAction("ACCEPTED")}
                   >
                     قبول
@@ -157,7 +187,7 @@ const AdminSingleOrder: React.FC<Props> = (props) => {
                     fullWidth
                     variant="contained"
                     className={`${classes.submit} ${classes.refuse}`}
-                    disabled={approveSchoolLoading}
+                    disabled={approveTeacherLoading}
                     onClick={() => handleAction("REFUSED")}
                   >
                     رفض
@@ -170,7 +200,7 @@ const AdminSingleOrder: React.FC<Props> = (props) => {
                       fullWidth
                       variant="contained"
                       className={`${classes.submit}`}
-                      disabled={approveSchoolLoading}
+                      disabled={approveTeacherLoading}
                       onClick={() => handleAction("IN_PROGRESS")}
                     >
                       وضع تحت المراجعة
@@ -182,7 +212,7 @@ const AdminSingleOrder: React.FC<Props> = (props) => {
               <></>
             )}
             <Grid item xs={12} className={classes.backLinkContainer}>
-              <Link to="/admin/orders">العودة لقائمة الطلبات</Link>
+              <Link to="/manager/orders">العودة لقائمة الطلبات</Link>
             </Grid>
           </Grid>
         </Container>
@@ -191,4 +221,4 @@ const AdminSingleOrder: React.FC<Props> = (props) => {
   );
 };
 
-export default AdminSingleOrder;
+export default ManagerSingleOrderTeacher;

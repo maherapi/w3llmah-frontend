@@ -1,0 +1,1 @@
+export type StudentStatus = "ACTIVE" | "NONACTIVE" | "DELETED" | null;

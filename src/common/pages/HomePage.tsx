@@ -19,7 +19,11 @@ const HomePage: React.FC<Props> = (props) => {
         history.push("/teacher");
       } else if (userRole === "Admin") {
         history.push("/admin/orders");
+      } else if (userRole === "Manager") {
+        history.push("/manager/orders");
       }
+    } else {
+      history.push("/register");
     }
   }, [loggedIn]);
 

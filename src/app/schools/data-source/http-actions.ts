@@ -13,7 +13,7 @@ export interface IUserSchoolsResponse {
   date_of_birth: string;
   profile_img: string;
   verified_at: string;
-  userable_id: 2;
+  userable_id: number;
   userable_type: UserRole;
   status: string;
   created_at: string;

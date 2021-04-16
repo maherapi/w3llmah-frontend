@@ -15,6 +15,7 @@ import { IAllChatResponse } from "../../../app/messaging/data-source/http-action
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { getSingleChat } from "../../../app/messaging/messagingSlice";
+import env from "../../../env";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,7 +54,7 @@ const ChatItem: React.FC<Props> = ({ chat }) => {
       <Button style={{display: "block", width: "100%", textTransform: "unset"}} onClick={handleChatClick}>
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar alt={chat.name} src={chat.profile_img} />
+            <Avatar alt={chat.name} src={`${env.url}/images/profile_img/${chat.profile_img}`} />
           </ListItemAvatar>
           <Grid container>
             <Grid item xs={BODY_COLS} sm={BODY_COLS} md={BODY_COLS} lg={BODY_COLS} xl={BODY_COLS}>
